@@ -1,6 +1,6 @@
-import { afterUpdate } from "svelte";
-import { writable, get } from "svelte/store";
-import * as rules from "./rules";
+import { afterUpdate } from 'svelte';
+import { writable, get } from 'svelte/store';
+import * as rules from './rules';
 
 function getValue(field) {
   return field.value;
@@ -16,12 +16,12 @@ function validate(value, { field, validator, observable }) {
   let pending = false;
   let rule;
 
-  if (typeof validator === "function") {
+  if (typeof validator === 'function') {
     const resp = validator.call(null, value);
 
     if (isPromise(resp)) {
       pending = true;
-      resp.then(({ rule, valid }) => {
+      resp.then(({ name, valid }) => {
         observable.update(n => {
           n[field] = n[field] || { errors: [] };
 
@@ -29,7 +29,7 @@ function validate(value, { field, validator, observable }) {
           n[field].valid = valid;
 
           if (!valid) {
-            n[field].errors.push(rule);
+            n[field].errors.push(name);
           }
 
           return n;
@@ -78,9 +78,9 @@ function field(name, config, observable, { stopAtFirstError }) {
 
 export function bindClass(
   node,
-  { form, name, valid = "valid", invalid = "invalid" }
+  { form, name, valid = 'valid', invalid = 'invalid' }
 ) {
-  const key = name || node.getAttribute("name");
+  const key = name || node.getAttribute('name');
 
   const unsubscribe = form.subscribe(context => {
     if (context.dirty && context[key] && context[key].valid) {
@@ -142,7 +142,7 @@ function walkThroughFields(fn, observable, config) {
   });
 
   returnedObject.valid = !Object.keys(returnedObject).find(f => {
-    if (["oldValues", "dirty"].includes(f)) return false;
+    if (['oldValues', 'dirty'].includes(f)) return false;
     return !returnedObject[f].valid;
   });
 
