@@ -23,6 +23,7 @@ function validate(value, { field, validator, observable }) {
       pending = true;
       resp.then(({ name, valid }) => {
         observable.update(n => {
+          rule = name;
           n[field] = n[field] || { errors: [] };
 
           n[field].pending = false;
