@@ -179,8 +179,8 @@ function walkThroughFields(fn, observable, initialFieldsData, config) {
       valid: true,
       enabled: true,
     };
-    const initialFieldData = initialFieldsData[key];
 
+    const initialFieldData = initialFieldsData[key];
     const value = getValue(field);
     const oldValue = getValue(oldField);
     const enabled = field.enabled;
@@ -197,7 +197,7 @@ function walkThroughFields(fn, observable, initialFieldsData, config) {
       }
     }
 
-    if (value !== initialFieldData.value) {
+    if (initialFieldData && value !== initialFieldData.value) {
       returnedObject.dirty = true;
     }
 
